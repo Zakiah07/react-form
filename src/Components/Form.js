@@ -14,12 +14,16 @@ const schema = yup.object().shape({
 });
 
 function Form() {
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, getValues } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      firstName: "ibrahijm",
+    },
   });
 
+  console.log(getValues());
   const submitForm = (data) => {
-    console.log(data);
+    alert(JSON.stringify(data));
   };
   return (
     <div className="Form">
@@ -28,42 +32,35 @@ function Form() {
         <form onSubmit={handleSubmit(submitForm)}>
           <input
             type="text"
-            name="firstName"
-            ref={register}
             placeholder="First Name..."
+            {...register("firstName")}
           />
-          <p> {errors.firstName?.message} </p>
+          <p> {errors?.firstName?.message} </p>
           <input
             type="text"
-            name="lastName"
             placeholder="Last Name..."
-            ref={register}
+            {...register("lastName")}
           />
-          <p> {errors.lastName?.message} </p>
-          <input
-            type="text"
-            name="email"
-            placeholder="Email..."
-            ref={register}
-          />
-          <p> {errors.email?.message} </p>
-          <input type="text" name="age" placeholder="Age..." ref={register} />
-          <p> {errors.age?.message} </p>
+          <p> {errors?.lastName?.message} </p>
+          <input type="text" placeholder="Email..." {...register("email")} />
+          <p> {errors?.email?.message} </p>
+          <input type="text" placeholder="Age..." {...register("age")} />
+          <p> {errors?.age?.message} </p>
           <input
             type="password"
-            name="password"
             placeholder="Password..."
-            ref={register}
+            {...register("password")}
           />
-          <p> {errors.password?.message} </p>
+          <p> {errors?.password?.message} </p>
           <input
             type="password"
-            name="confirmPassword"
             placeholder="Confirm Password..."
-            ref={register}
+            {...register("confirmPassword")}
           />
-          <p> {errors.confirmPassword && "Passwords Should Match!"} </p>
-          <input type="submit" id="submit" />
+          <p> {errors?.confirmPassword && "Passwords Should Match!"} </p>
+          <button type="submit" id="submit">
+            Submit
+          </button>
         </form>
       </div>
     </div>
